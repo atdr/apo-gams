@@ -17,20 +17,27 @@ F = 16;
 
 *Declaring variables in the model
 *To be completed by the student by declaring all the variables below
-
-
-
+VARIABLES
+A   new area
+L   new length
+W   new width ;
 
 *Declaring equations in the model
 *To be completed by the student by declaring all the equations below
-
+EQUATIONS
+area    area of garden
+perim   perimeter of garden ;
 
 *Defining the equations
 *To be completed by the student by defining all the equations below
-
+area.. A =e= L * W;
+perim.. F =e= 2*(L+W);
 
 *Initial Guess
 *To be completed by the student
+A.l = A0;
+L.l = L0;
+W.l = W0
 
 *Defining the model
 Model Garden /all/;

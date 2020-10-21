@@ -16,17 +16,17 @@ Scalar V 'volume in m^3' /1/;
 
 *Define variables
 VARIABLES
-*z       ’objective variable’
-C(i)    ’concentration (mol*m^-3)’
-F       ’flowrate (m^3*s^-1)’;
+z       'objective variable'
+C(i)    'concentration (mol*m^-3)'
+F       'flowrate (m^3*s^-1)';
 
 Positive variables
 C(i),F;
 
 *Define equations
 EQUATIONS
-obj       ’objective’
-eq1,eq2   ’constraints';
+obj       'objective'
+eq1,eq2   'constraints';
 
 obj..z =e= C('B');
 eq1..F*(C('Ain')-C('A'))-k('1')*C('A')*V=e=0;
@@ -40,7 +40,7 @@ F.lo=0;
 F.up=20;
 
 *set starting point
-C.1('A')=0.01;
+C.l('A')=0.01;
 F.l=10;
 C.l('Ain')=0.8;
 C.l('B')=0.5;

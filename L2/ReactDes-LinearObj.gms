@@ -9,24 +9,24 @@ j /1*2/;
 PARAMETERS
 *rate constant in s^-1
 k(j) 'rate constants '
-/1   5
+/1   1
  2   2/;
 
 Scalar V 'volume in m^3' /1/;
 
 *Define variables
 VARIABLES
-z       ’objective variable’
-C(i)    ’concentration (mol*m^-3)’
-F       ’flowrate (m^3*s^-1)’;
+z       'objective variable'
+C(i)    'concentration (mol*m^-3)'
+F       'flowrate (m^3*s^-1)';
 
 Positive variables
 C(i),F;
 
 *Define equations
 EQUATIONS
-obj       ’objective’
-eq1,eq2   ’constraints';
+obj       'objective'
+eq1,eq2   'constraints';
 
 obj..z =e= C('B');
 eq1..F*(C('Ain')-C('A'))-k('1')*C('A')*V=e=0;
