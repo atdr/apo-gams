@@ -1,0 +1,9 @@
+# GAMS gitignore
+
+# all the log files (including old ones)
+*.log
+*.log~*
+
+# listing file and its TOC
+*.lst
+*.lxi
