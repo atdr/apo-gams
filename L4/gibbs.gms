@@ -16,7 +16,7 @@ TABLE
 ;
 
 PARAMETERS
-    F0(j)   standard Gibbs free energy of compound j
+    F0(j)   standard Gibbs free energy of compound j at 3500 K & 1 atm
         /   H   -10.021
             H2  -21.096
             H2O -37.986
@@ -27,17 +27,16 @@ PARAMETERS
             O   -14.640
             O2  -30.594
             OH  -26.11  /
-    c(j)    calculated Gibbs free energy of compund j
+    c(j)    calculated Gibbs free energy of compund j at 3500 K & P
     b(i)    atomic weights of element i in mixture
         /   N   1
             H   2
             O   1   /
-    T       temperature [K] / 3500 /
     P       pressure [atm]  / 51.0345 /
-    R       ideal gas const / 8.314 /
 ;
 
-c(j) = F0(j)/(R*T) + log(P);
+c(j) = F0(j) + log(P);
+display c;
 
 POSITIVE VARIABLES
     x(j)    moles of compound j in mixture
