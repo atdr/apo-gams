@@ -101,18 +101,32 @@ positive variables s,ys,ns;
 equations
 
 *PM equations
-objective1a objective function PM;
+objective1a objective function PM
+eq1, eq2, eq3, eq4, eq5, eq6, eq7, eq8, eqAux;
 
 objective1a.. OF=e=s;
 
+eq1(j)..    ps(j)*sum(i, B(i,j)*ns(i)) =g= sum(i, A(i,j)*n(i)) - po(j)*sum(i, B(i,j)*n(i));
+eq2(j)..    ps(j)*sum(i, B(i,j)*ns(i)) =g= -sum(i, A(i,j)*n(i)) + po(j)*sum(i, B(i,j)*n(i));
+eq3(i)..    n(i) =e= nL(i) + sum(k$(ord(k) lt (Kmax+1)), 2**(ord(k)-1) * y(i,k));
+eq4(i)..    ns(i) =e= s*nL(i) + sum(k$(ord(k) lt (Kmax+1)), 2**(ord(k)-1) * ys(i,k));
+eq5(i,k)..  s - sU*(1-y(i,k)) =l= ys(i,k);
+eq6(i,k)..  ys(i,k) =l= s - sL*(1-ys(i,k));
+eq7(i,k)..  sL*y(i,k) =l= ys(i,k);
+eq8(i,k)..  ys(i,k) =l= sU*y(i,k);
+
+eqAux..     sum(i, n(i)) =g= 1;
+
 Model original /all/;
+* initial guess
+n.l('i1') = 1;
 
 option MIP=cplex;
 option MINLP=sbb;
 option optcr=0;
 option optca=0;
 
-solve original minimising OF using MINLP;
+solve original minimising OF using MIP;
 
 
 
