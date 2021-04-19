@@ -1,4 +1,5 @@
 $title Newsboy sales optimisation
+$onEolCom
 
 SET i scenarios / 1 * 8 / ;
 
@@ -58,4 +59,8 @@ SOLVE news_stochastic USING MIP MAXIMIZING ER;
 
 display ER.l, B.l, S.l, R.l;
 
+* now use expected demand to determine B instead
+B.fx = 181; !! cannot use functions round/ceil on ED (181.4) since these are only available in DNLP models https://www.gams.com/33/docs/UG_Parameters.html#UG_Parameters_IntrinsicFunctions
+SOLVE news_stochastic USING MIP MAXIMIZING ER;
 
+display ER.l, B.l, S.l, R.l;
