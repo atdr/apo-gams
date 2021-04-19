@@ -22,6 +22,8 @@ PARAMETERS
             7   0.10
             8   0.10 /
     ED      expected demand [units]
+    P_B     purchase price / 1.0 /
+    P_S     sales price / 1.4 /
 ;
 
 ED = sum(i, D(i)*P(i));
@@ -48,7 +50,7 @@ EQUATIONS
 * sales1..    S =e= min(B, ED);
 sales2..    S =l= B;
 sales3..    S =l= ED;
-profit..    R =e= 1.4*S - ED;
+profit..    R =e= P_S*S - P_B*ED;
 
 MODEL news /all/;
 SOLVE news USING MIP MAXIMIZING R;
