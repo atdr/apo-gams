@@ -30,33 +30,22 @@ ED = sum(i, D(i)*P(i));
 display ED;
 
 INTEGER VARIABLES
-* stochastic model
     B       units bought
     S(i)    units sold in scenario i
-* deterministic model
-    B2      units bought
-    S2      units sold
 ;
 
-B.lo = 0; B2.lo = 0;
-S.lo(i) = 0; S2.lo = 0;
+B.lo = 0;
+S.lo(i) = 0;
 
 VARIABLES
-* stochastic model
     R(i)    profit in scenario i
     ER      expected profit
-* deterministic model
-    R2      profit
 ;
 
 EQUATIONS
-* stochastic model
     salesB(i),salesD(i)
     profit(i)
     profitE
-* deterministic model
-    salesB2,salesD2
-    profit2
 ;
 
 salesB(i).. S(i) =l= B;
@@ -69,11 +58,4 @@ SOLVE news_stochastic USING MIP MAXIMIZING ER;
 
 display ER.l, B.l, S.l, R.l;
 
-salesB2..   S2 =l= B2;
-salesD2..   S2 =l= ED;
-profit2..   R2 =e= P_S*S2 - P_B*B2;
 
-MODEL news_deterministic / salesB2, salesD2, profit2 /;
-SOLVE news_deterministic USING MIP MAXIMIZING R2;
-
-display R2.l, B2.l, S2.l;
