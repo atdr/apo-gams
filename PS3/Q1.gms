@@ -54,13 +54,13 @@ salesD(i).. S(i) =l= D(i);
 profit(i).. R(i) =e= P_S*S(i) - P_B*B;
 profitE..   ER =e= sum(i, R(i)*P(i));
 
-MODEL news_stochastic / salesB, salesD, profit, profitE /;
-SOLVE news_stochastic USING MIP MAXIMIZING ER;
+MODEL news / salesB, salesD, profit, profitE /;
+SOLVE news USING MIP MAXIMIZING ER;
 
 display ER.l, B.l, S.l, R.l;
 
 * now use expected demand to determine B instead
 B.fx = 181; !! cannot use functions round/ceil on ED (181.4) since these are only available in DNLP models https://www.gams.com/33/docs/UG_Parameters.html#UG_Parameters_IntrinsicFunctions
-SOLVE news_stochastic USING MIP MAXIMIZING ER;
+SOLVE news USING MIP MAXIMIZING ER;
 
 display ER.l, B.l, S.l, R.l;
