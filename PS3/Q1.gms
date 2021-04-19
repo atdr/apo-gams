@@ -3,7 +3,7 @@ $title Newsboy sales optimisation
 SET i scenarios / 1 * 8 / ;
 
 PARAMETERS
-    D(i)    demand [units]
+    D(i)    demand in scenario i [units]
         /   1   100
             2   130
             3   150
@@ -30,29 +30,30 @@ ED = sum(i, D(i)*P(i));
 display ED;
 
 INTEGER VARIABLES
-    B   units bought
-    S   units sold
+    B       units bought
+    S(i)    units sold in scenario i
 ;
 
 B.lo = 0;
-S.lo = 0;
+S.lo(i) = 0;
 
 VARIABLES
-    R   profit
+    R(i)    profit in scenario i
+    ER      expected profit
 ;
 
 EQUATIONS
-* sales1
-    sales2,sales3
-    profit
+    salesB(i),salesD(i)
+    profit(i)
+    profitE
 ;
 
-* sales1..    S =e= min(B, ED);
-sales2..    S =l= B;
-sales3..    S =l= ED;
-profit..    R =e= P_S*S - P_B*ED;
+salesB(i).. S(i) =l= B;
+salesD(i).. S(i) =l= D(i);
+profit(i).. R(i) =e= P_S*S(i) - P_B*B;
+profitE..   ER =e= sum(i, R(i)*P(i));
 
 MODEL news /all/;
-SOLVE news USING MIP MAXIMIZING R;
+SOLVE news USING MIP MAXIMIZING ER;
 
-display B.l, S.l, R.l;
+display ER.l, B.l, S.l, R.l;
